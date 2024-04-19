@@ -3,6 +3,7 @@ import { ActivityIndicator, Text, View } from "react-native";
 import { Brand } from "@/components/molecules";
 import { SafeScreen } from "@/components/template";
 import { navigateAndSimpleReset } from "@/navigators/utils";
+import { storage } from "@/App";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTheme } from "@/theme";
@@ -20,7 +21,12 @@ function Startup() {
   });
 
   useEffect(() => {
-    navigateAndSimpleReset("Chat");
+    const username = storage.getString("username");
+    if (username) {
+      navigateAndSimpleReset("Lobby");
+    } else {
+      navigateAndSimpleReset("Login");
+    }
   }, [isSuccess]);
 
   return (
